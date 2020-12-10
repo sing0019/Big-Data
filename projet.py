@@ -16,3 +16,15 @@ sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
 
 #Importation du fichier txt
 text_file = sc.textFile("sample.txt")
+
+#Le word count
+counts = text_file.flatMap(lambda line: line.split(" ")) \
+             .map(lambda word: (word, 1)) \
+             .reduceByKey(lambda a, b: a + b)
+             
+#Affichage du resultat sous la forme (clé, valeur)
+for x in counts.collect():
+    print(x)
+    
+#Export du fichier resultant 
+counts.coalesce(1).saveAsTextFile("projet.txt")
