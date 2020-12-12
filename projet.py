@@ -28,3 +28,6 @@ for x in counts.collect():
     
 #Export du fichier resultant 
 counts.coalesce(1).saveAsTextFile("projet.txt")
+
+# Close sc
+sc.close
